@@ -1,5 +1,7 @@
 # Umbral_AR
 
+**Versión 1.0.0** · [Historial de cambios](CHANGELOG.md)
+
 **Descubre un destino al escanear una imagen y continúa la experiencia cuando llegues al lugar.**
 
 Umbral_AR es una experiencia turística de realidad aumentada para el navegador, orientada a dispositivos móviles. Combina reconocimiento de imágenes y geolocalización para presentar objetos 3D, imágenes y video, con una guía conversacional por voz mediante Gemini Live.
@@ -12,7 +14,7 @@ Umbral_AR es una experiencia turística de realidad aumentada para el navegador,
 
 Una misma entrada del catálogo puede tener un marcador y coordenadas. También admite contenido diferente para las etapas de descubrimiento (`discovery`) y visita presencial (`onsite`). Los dos métodos de acceso forman parte de una sola aplicación.
 
-> **Estado de la configuración:** el catálogo de referencia todavía contiene coordenadas `null` y textos pendientes de validación. La activación geográfica requiere coordenadas reales. Los modelos, videos, imágenes y marcadores deben estar presentes en las rutas configuradas.
+> **Estado de la versión 1.0.0:** se publica el código y los recursos disponibles en la copia de origen. No se incluyen `public/marcadores.mind` ni `public/models/modelo.glb`, aunque la configuración los referencia. La carpeta de medios de origen está vacía. Debes aportar esos recursos para utilizar la experiencia configurada. El catálogo conserva coordenadas `null` y textos pendientes de validación.
 
 ## Tecnologías
 
@@ -41,7 +43,14 @@ La compatibilidad y el rendimiento dependen del dispositivo, del navegador, del 
 
 ## Instalación
 
-Con el proyecto completo en tu equipo, abre una terminal en su carpeta raíz:
+Clona el repositorio y entra en su carpeta:
+
+```bash
+git clone https://github.com/m0nk3xzz/Umbral_AR.git
+cd Umbral_AR
+```
+
+Instala las dependencias desde la raíz del proyecto:
 
 ```bash
 npm ci --ignore-scripts
@@ -163,7 +172,9 @@ Los scripts declarados en `package.json` incluyen:
 | `npm run test:browser` | Ejecutar la comprobación de navegador declarada por el proyecto. |
 | `npm run audit:dependencies` | Consultar vulnerabilidades del archivo de bloqueo sin scripts de instalación. |
 
-Estos comandos requieren que estén presentes todos los archivos a los que hacen referencia. La copia de `tools/` revisada para este README no contiene todos los scripts declarados en `package.json`; completa esa carpeta o sincroniza la lista de scripts antes de utilizarla como validación. Esta documentación no certifica que las pruebas se hayan ejecutado ni que la aplicación esté libre de errores.
+Estos comandos requieren que estén presentes todos los archivos a los que hacen referencia. La versión 1.0.0 conserva referencias a siete scripts ausentes de la copia de origen: `check-voice-lifecycle.mjs`, `check-media-lifecycle.mjs`, `check-resource-cache.mjs`, `check-audit-integration.mjs`, `check-sdk-contract.mjs`, `check-audit-a.mjs` y `check-browser.mjs`, todos bajo `tools/`. Recupera esos archivos antes de utilizar la suite completa. No se eliminaron comprobaciones para ocultar esas ausencias.
+
+Para preparar esta publicación se comprobaron la sintaxis de los archivos JavaScript, los imports locales y los hashes de los siete recursos de MediaPipe. No se ejecutaron la compilación ni la suite completa, ni se validó la experiencia desde un dispositivo móvil.
 
 ## Despliegue
 
@@ -180,6 +191,18 @@ GitHub almacena el código. GitHub Pages sirve archivos estáticos y no ejecuta 
 ## Privacidad y permisos
 
 La cámara permite reconocer marcadores y manos; la ubicación permite evaluar destinos cercanos; el micrófono permite conversar con la guía. Cada función depende de los permisos del navegador. La conversación por voz implica enviar audio a Gemini, sujeto a las condiciones del proveedor. Evita utilizar información sensible en las conversaciones.
+
+## Versiones
+
+La versión de la aplicación se registra en `package.json` y `package-lock.json`. Cada publicación en GitHub utiliza una etiqueta `vX.Y.Z` y una entrada en [CHANGELOG.md](CHANGELOG.md).
+
+| Ejemplo | Tipo de cambio |
+| --- | --- |
+| `1.0.1` | Correcciones compatibles. |
+| `1.1.0` | Nuevas funciones compatibles. |
+| `2.0.0` | Cambios incompatibles que requieren adaptar la integración o configuración. |
+
+Para futuras publicaciones, actualiza ambos archivos de versión y el historial de cambios, confirma los cambios en Git y crea una etiqueta nueva sobre el commit correspondiente. Publica después una Release de GitHub asociada a esa etiqueta. Conserva las etiquetas publicadas para poder recuperar cada versión.
 
 ## Licencia y autor
 

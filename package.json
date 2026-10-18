@@ -1,0 +1,49 @@
+{
+  "name": "umbral_ar",
+  "version": "1.0.0",
+  "private": true,
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "type": "module",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node tools/check-imports.mjs && node tools/check-calibration-motion.mjs && node tools/check-token-handler.mjs && node tools/check-geo.mjs && node tools/check-tourism-stages.mjs && node tools/check-field-test.mjs && node tools/check-visual-flow.mjs && node tools/verify-mediapipe.mjs && node tools/check-audit-regressions.mjs && node tools/check-distributed-quota.mjs && node tools/check-journey-progress.mjs && node tools/check-voice-lifecycle.mjs && node tools/check-media-lifecycle.mjs && node tools/check-resource-cache.mjs && node tools/check-audit-integration.mjs && node tools/check-sdk-contract.mjs && node tools/check-audit-a.mjs",
+    "check": "npm test",
+    "test:browser": "node tools/check-browser.mjs",
+    "audit:dependencies": "npm audit --package-lock-only --ignore-scripts"
+  },
+  "devDependencies": {
+    "acorn": "^8.19.0",
+    "playwright": "1.62.1",
+    "semver": "^7.8.5",
+    "vite": "^8.3.0"
+  },
+  "dependencies": {
+    "@google/genai": "2.22.0",
+    "@mediapipe/tasks-vision": "1.0.1",
+    "mind-ar": "^1.2.5",
+    "three": "^0.152.2"
+  },
+  "overrides": {
+    "canvas": {
+      "@mapbox/node-pre-gyp": "2.0.3"
+    }
+  },
+  "description": "Experiencia turística de realidad aumentada con reconocimiento de imágenes, geolocalización y guía por voz.",
+  "author": {
+    "name": "Gabriel Andres Rosales Quijije",
+    "email": "g.rosalesquijije@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m0nk3xzz/Umbral_AR.git"
+  },
+  "bugs": {
+    "url": "https://github.com/m0nk3xzz/Umbral_AR/issues"
+  },
+  "homepage": "https://github.com/m0nk3xzz/Umbral_AR#readme"
+}

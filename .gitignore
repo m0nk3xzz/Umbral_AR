@@ -1,0 +1,32 @@
+# Archivos temporales y registros de herramientas de desarrollo.
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencias instaladas y salidas de compilación que pueden regenerarse.
+node_modules
+dist
+dist-ssr
+*.local
+
+# Excluye credenciales privadas y conserva solo la plantilla de configuración.
+.env*
+!.env.example
+
+# Preferencias personales del editor: se permite únicamente la recomendación de extensiones.
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Estado local que genera la integración con la plataforma de despliegue.
+.vercel

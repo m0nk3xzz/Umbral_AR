@@ -1,0 +1,31 @@
+/* Variables compartidas para paletas, tipografía y transiciones.
+   theme.js personaliza los colores; motion.js lee las duraciones y curvas
+   para sincronizar los efectos JavaScript con los estilos de la interfaz. */
+:root {
+  --m-ink: #F7F4EC;
+  --m-ink-2: #EDE9DF;
+  --m-bone: #233E35;
+  --m-accent: #335C48;
+  --m-on-accent: #FFFFFF;
+  --m-listen: #AB4336;
+  --m-speak: #C6DCC8;
+  --surface: #FCFBF6;
+  --text-muted: #59665D;
+  --border: #D7DDD1;
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-ui: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ease-reveal: cubic-bezier(.4,0,.2,1);
+  --ease-exit: cubic-bezier(.4,0,.2,1);
+  --ease-drawer: cubic-bezier(.4,0,.2,1);
+  --ease-std: cubic-bezier(.4,0,.2,1);
+  --dur-tap: 120ms;
+  --dur-quick: 160ms;
+  --dur-exit: 160ms;
+  --dur-release: 220ms;
+  --dur-base: 220ms;
+  --dur-panel: 260ms;
+  --dur-draw: 260ms;
+  --stagger: 0ms;
+  --safe-top: env(safe-area-inset-top,0px);
+  --safe-bottom: env(safe-area-inset-bottom,0px);
+}

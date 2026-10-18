@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+
+    <!-- Esta política CSP limita recursos y conexiones desde el documento. Los encabezados del servidor pueden imponer restricciones adicionales que una etiqueta meta no admite. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self';
+               base-uri 'none';
+               object-src 'none';
+               form-action 'none';
+               script-src 'self' 'wasm-unsafe-eval';
+               worker-src 'self' blob:;
+               style-src 'self' 'unsafe-inline';
+               img-src 'self' data: blob:;
+               media-src 'self' blob:;
+               font-src 'self';
+               connect-src 'self' https://generativelanguage.googleapis.com wss://generativelanguage.googleapis.com"
+    />
+
+    <!-- La configuración del viewport mantiene el zoom manual y permite enfocar campos de texto sin bloquear funciones de accesibilidad. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+
+    <!-- El nombre inicial de la pestaña se sustituye por el de la experiencia seleccionada cuando se ejecuta el tema. -->
+    <title>Umbral · Lugares por descubrir</title>
+
+    <!-- El color del navegador se sincroniza con el diseño activo mediante el módulo de tema. -->
+    <meta name="theme-color" content="#F7F4EC" />
+
+    <!-- La identidad del sitio usa un icono SVG servido junto con la aplicación. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Las tipografías están alojadas localmente para no depender de servicios externos durante la visita. -->
+    <link rel="stylesheet" href="/fonts/fonts.css" />
+  </head>
+
+  <body>
+    <!-- Las definiciones SVG se reutilizan mediante referencias a símbolos, reduciendo la repetición de iconos en el documento. -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></g></symbol>
+      <symbol id="i-card" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 10l3.5-3.2 3.5 3.2-3.5 3.2z"/><path d="M8.5 17h7"/></g></symbol>
+      <symbol id="i-vessel" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6M9.5 4c0 2.2-3.5 3.6-3.5 8 0 4 2.5 7 6 7s6-3 6-7c0-4.4-3.5-5.8-3.5-8"/><path d="M6.3 12.5c3.5 1.2 7.5 1.2 11.4 0"/></g></symbol>
+      <symbol id="i-hand" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V6.5a1.5 1.5 0 0 1 3 0V11M11 11V4.5a1.5 1.5 0 0 1 3 0V11M14 11V6.5a1.5 1.5 0 0 1 3 0V14c0 4-2.5 7-6 7-2.4 0-4-1-5.4-3L3 13.6a1.5 1.5 0 0 1 2.5-1.6L8 14"/></g></symbol>
+      <symbol id="i-refresh" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></g></symbol>
+      <symbol id="i-help" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.6a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1.1.9-1.1 1.7M12 17h.01"/></g></symbol>
+      <symbol id="i-keyboard" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h.01M11 10h.01M15 10h.01M7 14h10"/></g></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></g></symbol>
+      <symbol id="i-mic" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></g></symbol>
+      <symbol id="i-move" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18M12 3l-3 3M12 3l3 3M12 21l-3-3M12 21l3-3M3 12l3-3M3 12l3 3M21 12l-3-3M21 12l-3 3"/></g></symbol>
+      <symbol id="i-roty" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="8" ry="3.6"/><path d="M20 12l-2.2-2.2M20 12l-2.2 2.2"/></g></symbol>
+      <symbol id="i-rotx" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="3.6" ry="8"/><path d="M12 4l-2.2 2.2M12 4l2.2 2.2"/></g></symbol>
+      <symbol id="i-scale" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></g></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></g></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></g></symbol>
+      <symbol id="i-camoff" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18M9.5 5H15l1.5 2H20a1 1 0 0 1 1 1v9M3 8a1 1 0 0 1 1-1h1.5M3 8v9a1 1 0 0 0 1 1h13.5M12 9a3.5 3.5 0 0 1 3.4 4.3"/></g></symbol>
+      <symbol id="i-send" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></g></symbol>
+      <symbol id="i-center" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"/></g></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z" fill="currentColor"/></symbol>
+      <symbol id="i-pause" viewBox="0 0 24 24"><g fill="currentColor"><rect x="7" y="5" width="3.5" height="14" rx="1"/><rect x="13.5" y="5" width="3.5" height="14" rx="1"/></g></symbol>
+      <symbol id="i-volume" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10h4l5-4v12l-5-4H5z"/><path d="M17 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/></g></symbol>
+      <symbol id="i-seek" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8l4 4-4 4M20 8l-4 4 4 4M9 12h6"/></g></symbol>
+
+      <symbol id="i-location" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></g></symbol>
+      <symbol id="i-compass" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m16.5 7.5-3 6-6 3 3-6Z"/></g></symbol>
+      <!-- Estas siluetas ofrecen modelos visuales de la mano que el visitante debe colocar durante la calibración. -->
+      <symbol id="h-open-ghost" viewBox="0 0 200 260"><g fill="none" stroke="currentColor" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"><path d="M78 214L58 188L44 164L32 142"/><path d="M80 150L76 110L74 84L72 62"/><path d="M102 146L102 100L102 70L102 44"/><path d="M124 152L128 110L130 84L132 62"/><path d="M144 164L154 132L160 112L166 94"/><polygon points="80,150 144,164 132,236 72,236" fill="currentColor"/></g></symbol>
+      <symbol id="h-fist-ghost" viewBox="0 0 200 260"><g fill="none" stroke="currentColor" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"><polygon points="76,150 146,162 134,236 72,236" fill="currentColor"/><path d="M74 214L66 192L84 176L100 170"/></g><g fill="currentColor"><circle cx="82" cy="146" r="14"/><circle cx="103" cy="140" r="14"/><circle cx="124" cy="144" r="14"/><circle cx="142" cy="154" r="13"/></g></symbol>
+    </svg>
+
+    <!-- El contenedor principal recibe el vídeo y el lienzo de renderizado que administra MindAR. -->
+    <div id="app"></div>
+
+    <!-- Primera etapa: presentación de la experiencia y acceso al proceso de inicio. -->
+    <section id="s-intro" class="layer">
+
+
+      <header class="topbar">
+        <div class="museum">
+          <span class="mark" id="museum-mark">U</span>
+          <div><span id="museum-name">Umbral</span><small data-i18n="brand.tagline"></small></div>
+        </div>
+        <button class="pill" id="lang-btn" type="button" data-i18n-attr="aria-label:lang.label">
+          <svg class="i"><use href="#i-globe" /></svg><span id="lang-label">ES</span>
+        </button>
+      </header>
+
+      <!-- La portada expone el objetivo de la experiencia antes de solicitar permisos del dispositivo. -->
+      <div class="view" id="intro-home">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="tiny-compass" aria-hidden="true">↗</span><span data-i18n="intro.eyebrow"></span></p>
+          <h1 class="display" data-i18n="intro.title"></h1>
+          <p class="hero-sub" data-i18n="intro.subtitle"></p>
+          <ol class="journey steps">
+            <li><span class="journey-no">01</span><div><strong data-i18n="intro.step1"></strong><p data-i18n="intro.step1body"></p></div><svg class="i" aria-hidden="true"><use href="#i-card" /></svg></li>
+            <li data-geo-copy><span class="journey-no">02</span><div><strong data-i18n="intro.step2"></strong><p data-i18n="intro.step2body"></p></div><svg class="i" aria-hidden="true"><use href="#i-location" /></svg></li>
+          </ol>
+          <div class="cta-zone">
+            <button class="btn primary" id="start-btn" type="button"><span data-i18n="intro.start"></span><span aria-hidden="true">↗</span></button>
+            <p class="start-note" data-i18n="intro.note"></p>
+            <details class="privacy-details"><summary data-i18n="intro.permissions"></summary><p class="micro" id="intro-privacy" data-i18n="intro.privacy"></p></details>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-kicker"><span>UMBRAL /</span><span data-i18n="intro.artKicker"></span></div>
+          <svg class="landscape" viewBox="0 0 480 560" fill="none">
+            <defs><clipPath id="arch-clip"><path d="M44 520V239a196 196 0 0 1 392 0v281Z"/></clipPath></defs>
+            <path d="M27 525V238a213 213 0 0 1 426 0v287" stroke="currentColor" stroke-opacity=".35"/>
+            <g clip-path="url(#arch-clip)">
+              <path d="M44 520V239a196 196 0 0 1 392 0v281Z" fill="#DCE1CB"/>
+              <circle cx="327" cy="179" r="48" fill="#D77A54"/>
+              <path d="M-10 352 110 215 273 375 374 294 510 411V570H-10Z" fill="#A9B99A"/>
+              <path d="M-10 395 148 313 279 421 408 361 510 418V570H-10Z" fill="#71886F"/>
+              <path d="M-10 478c106-103 177-102 250-32 74 69 129-33 270-8v132H-10Z" fill="#36584B"/>
+              <path d="M268 361c-83 21-81 48-17 70 118 40 107 70-48 139" stroke="#F3D5A9" stroke-width="25"/>
+              <path d="M269 361c-83 21-81 48-17 70 118 40 107 70-48 139" stroke="#6E674A" stroke-width="1.2" stroke-dasharray="3 7"/>
+              <g stroke="#E5E8D7" stroke-opacity=".34"><path d="M44 275h392M44 322h392M44 369h392M44 416h392M44 463h392M99 110v410M169 61v459M239 43v477M309 61v459M379 110v410"/></g>
+            </g>
+            <g transform="translate(268 328)"><circle r="17" fill="#F7F4EC"/><path d="m0-9 6 16-6-3-6 3Z" fill="#36584B"/></g>
+            <path d="M44 535h392" stroke="currentColor" stroke-opacity=".35"/>
+          </svg>
+          <div class="art-footer"><span data-i18n="intro.artFooter"></span><svg class="i"><use href="#i-compass" /></svg></div>
+        </div>
+      </div>
+
+      <!-- La vista de progreso informa sobre la preparación de cámara, visión artificial y otros servicios. -->
+      <div class="view center" id="intro-loading" hidden>
+        <div class="ring-big">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="track" cx="60" cy="60" r="52" />
+            <circle class="prog" id="boot-ring" cx="60" cy="60" r="52" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" transform="rotate(-90 60 60)" />
+          </svg>
+          <b id="boot-percent">0%</b>
+        </div>
+        <h3 class="display sm" data-i18n="loading.title"></h3>
+        <ul class="checks">
+          <li id="check-camera"><span class="b"><svg class="i"><use href="#i-check" /></svg></span><span data-i18n="loading.camera"></span></li>
+          <li id="check-hands"><span class="b"><svg class="i"><use href="#i-check" /></svg></span><span data-i18n="loading.hands"></span></li>
+          <li id="check-catalog"><span class="b"><svg class="i"><use href="#i-check" /></svg></span><span data-i18n="loading.catalog"></span></li>
+        </ul>
+        <p class="micro" id="boot-note" data-i18n="loading.note"></p>
+      </div>
+
+      <!-- El bloque de error de arranque ofrece una alternativa visible cuando un servicio imprescindible no puede iniciarse. -->
+      <div class="view center" id="intro-error" hidden>
+        <div class="err-ico pop-in"><svg class="i"><use href="#i-camoff" /></svg></div>
+        <h3 class="display" id="error-title" style="font-size:25px" data-i18n="error.camera.title"></h3>
+        <p id="error-body" style="margin:0;font-size:14px;color:color-mix(in srgb, var(--m-bone) 74%, transparent)" data-i18n="error.camera.body"></p>
+        <div class="stack">
+          <button class="btn primary" id="error-retry" type="button" data-i18n="error.retry"></button>
+          <button class="btn ghost" id="error-howto" type="button" data-i18n="error.howto"></button>
+        </div>
+        <p id="error-howto-text" data-i18n="error.howtoText" hidden></p>
+      </div>
+    </section>
+
+    <!-- Segunda etapa: guía opcional para adaptar los umbrales de reconocimiento de manos. -->
+    <section id="s-calibrate" class="layer" data-step="ready" hidden>
+      <div class="scrim-bottom"></div>
+
+      <!-- Los indicadores de detección se alternan sin desplazar los demás componentes de calibración. -->
+      <div class="det-pill" id="cal-pill-ok"><span class="dot"></span><span data-i18n="cal.detected"></span></div>
+      <div class="det-pill warn" id="cal-pill-warn" hidden><span class="dot"></span><span data-i18n="cal.notDetected"></span></div>
+
+      <div class="hand-stage">
+        <svg class="ring" viewBox="0 0 240 240" aria-hidden="true">
+          <circle class="track" cx="120" cy="120" r="112" />
+          <circle class="prog" id="cal-ring" cx="120" cy="120" r="112" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" />
+        </svg>
+        <!-- Las distintas poses comparten el mismo espacio y cambian según el paso activo. -->
+        <svg class="hand" id="cal-hand-fist" viewBox="0 0 200 260" aria-hidden="true">
+          <use class="ghost" href="#h-fist-ghost" />
+        </svg>
+        <svg class="hand" id="cal-hand-open" viewBox="0 0 200 260" aria-hidden="true">
+          <use class="ghost" href="#h-open-ghost" />
+        </svg>
+        <div class="ok" id="cal-ok" hidden><svg class="i"><use href="#i-check" /></svg></div>
+      </div>
+
+      <div class="hint-chip panel" id="cal-hint" data-i18n="cal.hint" hidden></div>
+
+      <div class="sheet-bottom">
+        <div class="segs" id="cal-segs" aria-hidden="true">
+          <span class="seg" id="cal-seg1"><svg><use href="#i-check" /></svg><span data-i18n="cal.seg1"></span></span>
+          <span class="seg" id="cal-seg2"><svg><use href="#i-check" /></svg><span data-i18n="cal.seg2"></span></span>
+        </div>
+        <h3 class="display" id="cal-title"></h3>
+        <p id="cal-help"></p>
+        <button class="btn primary pop-in" id="calibration-start-btn" type="button" data-i18n="cal.ready.start" hidden></button>
+        <button class="linkbtn" id="calibration-skip-btn" type="button" data-i18n="cal.skip"></button>
+      </div>
+    </section>
+
+    <!-- Tercera etapa: el visitante busca un marcador o una pieza cercana mediante ubicación. -->
+    <section id="s-scan" class="layer" data-state="search" hidden>
+      <div class="visor-heading panel"><svg class="i" aria-hidden="true"><use href="#i-compass" /></svg><span data-i18n="scan.eyebrow"></span></div>
+      <div class="reticle" aria-hidden="true">
+        <div class="in"><i></i><i></i><i></i><i></i></div>
+        <div class="scan-line"></div>
+      </div>
+
+      <div class="top-r" >
+        <button class="iconbtn" id="scan-help-btn" type="button" data-i18n-attr="aria-label:ui.help">
+          <svg class="i"><use href="#i-help" /></svg>
+        </button>
+      </div>
+
+        <div class="helpbox panel" id="scan-help" hidden>
+          <svg class="i"><use href="#i-info" /></svg>
+          <span data-i18n="scan.help"></span>
+        </div>
+        <div class="helpbox panel" id="geo-denied" hidden>
+          <svg class="i"><use href="#i-info" /></svg>
+          <span data-i18n="geo.permissionDenied"></span>
+          <button class="linkbtn" id="geo-denied-close" type="button" data-i18n="ui.close"></button>
+        </div>
+      <div class="scrim-bottom"></div>
+      <div class="bottom3">
+        <!-- Mientras no existe una pieza detectada, este bloque muestra instrucciones de búsqueda. -->
+        <div class="block" id="scan-block-search">
+          <span class="eyebrow" data-i18n="scan.searchLabel"></span><h3 class="display" data-i18n="scan.title"></h3>
+          <p data-i18n="scan.sub"></p>
+        </div>
+
+
+
+        <!-- Una señal GPS suficiente activa la invitación por proximidad sin detener el seguimiento visual. -->
+        <div class="block" id="scan-block-geo" hidden >
+          <span class="tag" data-i18n="geo.tag"></span>
+          <h3 class="display" id="geo-piece-name"></h3>
+          <p id="geo-piece-summary"></p><p class="arrival-note" data-i18n="geo.arrivalNote"></p>
+          <div class="geo-distance"><svg class="i" aria-hidden="true"><use href="#i-center" /></svg><strong id="geo-distance"></strong></div>
+          <p class="micro" id="geo-refining" data-i18n="geo.refining" hidden></p>
+          <button class="btn" id="geo-manual-btn" type="button" data-i18n="geo.manual" hidden></button>
+          <button class="btn ghost" id="geo-exit-btn" type="button" data-i18n="geo.exit"></button>
+        </div>
+
+        <!-- El panel de hallazgo comunica que se identificó la pieza y puede estar cargándose su recurso. -->
+        <div class="block" id="scan-block-lock" hidden >
+          <span class="tag" data-i18n="scan.found.tag"></span>
+          <h3 class="display" id="scan-piece-name"></h3>
+          <div class="bar indeterminate" id="scan-bar"><b></b></div>
+          <div class="bar-label"><span data-i18n="scan.preparing"></span><span></span></div>
+        </div>
+
+        <!-- El desacople visual prepara el paso de un marcador físico a un objeto manipulable. -->
+        <div class="block" id="scan-block-decouple" hidden>
+          <div class="decouple-ring">
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <circle class="track" cx="32" cy="32" r="27" />
+              <circle class="prog" id="decouple-ring-prog" cx="32" cy="32" r="27" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" />
+            </svg>
+          </div>
+          <h3 class="display" data-i18n="scan.appear" style="margin-top:10px"></h3>
+          <p data-i18n="scan.removeCedula"></p>
+        </div>
+
+        <!-- Si el recurso falla al cargar, se muestra el error sin abandonar de forma abrupta la experiencia. -->
+        <div class="scan-err panel" id="scan-error" hidden>
+          <span id="scan-error-text"></span>
+          <button type="button" id="scan-error-retry" data-i18n="scan.errorRetry"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cuarta etapa: controles de la pieza, conversación con IA e información contextual. -->
+    <section id="s-interact" class="layer" data-voice="idle" data-gesture="" data-hand="no" data-sheet="closed" hidden>
+      <!-- Estos indicadores rodean visualmente el contenido 3D y se recolocan desde su proyección en pantalla. -->
+      <div class="ui-controls">
+      <div id="obj-overlay" aria-hidden="true">
+        <div class="brk"><i></i><i></i><i></i><i></i></div>
+      </div>
+      <div id="scale-chip" hidden>1.0×</div>
+
+      <div class="title-chip panel dimmable">
+        <span class="eyebrow" id="entry-context"></span>
+        <div class="display" id="piece-name"></div>
+        <small id="piece-inv"></small>
+      </div>
+      <div class="media-controls dimmable" id="media-controls" hidden>
+        <button class="iconbtn panel" id="media-btn" type="button" data-i18n-attr="aria-label:media.pause">
+          <svg class="i"><use href="#i-pause" /></svg>
+        </button>
+        <button class="btn ghost panel media-sound" id="media-sound-btn" type="button" data-i18n="media.sound.enable"></button>
+      </div>
+      <div class="top-r dimmable">
+        <button class="iconbtn" id="rescan-btn" type="button" data-i18n-attr="aria-label:ui.rescan">
+          <svg class="i"><use href="#i-refresh" /></svg>
+        </button>
+        <button class="iconbtn" id="gesture-help-btn" type="button" data-i18n-attr="aria-label:ui.helpGestures">
+          <svg class="i"><use href="#i-help" /></svg>
+        </button>
+      </div>
+
+      <!-- Esta acción recupera una pieza desplazada fuera del encuadre por gestos anteriores. -->
+      <button class="panel recenter dimmable" id="recenter-btn" type="button" hidden>
+        <svg class="i" aria-hidden="true"><use href="#i-center" /></svg>
+        <span data-i18n="ui.recenter"></span>
+      </button>
+
+      <!-- La confirmación de reescaneo exige dos acciones para evitar abandonar una pieza por accidente. -->
+      <div class="panel confirm-pop" id="rescan-confirm" hidden>
+        <p class="msg" data-i18n="ui.rescanConfirm"></p>
+        <div class="row">
+          <button class="btn primary" id="rescan-confirm-yes" type="button" data-i18n="ui.rescan"></button>
+          <button class="btn ghost" id="rescan-confirm-no" type="button" data-i18n="ui.cancel"></button>
+        </div>
+      </div>
+
+      <div class="panel" id="help-panel" hidden>
+        <h4 data-i18n="help.title"></h4>
+        <p data-i18n="help.gestures"></p>
+        <p data-i18n="help.recalibrate" style="margin-bottom:0"></p>
+        <button class="linkbtn" id="recalibrate-btn" type="button" data-i18n="ui.recalibrate"></button>
+      </div>
+
+      <div class="rail panel dimmable" role="group" aria-label="" data-i18n-attr="aria-label:gesture.rail">
+        <span class="hd" title=""></span>
+        <span class="g" data-g="move" role="img" data-i18n-attr="title:gesture.move,aria-label:gesture.move"><svg class="i"><use href="#i-move" /></svg></span>
+        <span class="g" data-g="rotateY" role="img" data-i18n-attr="title:gesture.rotateY,aria-label:gesture.rotateY"><svg class="i"><use href="#i-roty" /></svg></span>
+        <span class="g" data-g="rotateX" role="img" data-i18n-attr="title:gesture.rotateX,aria-label:gesture.rotateX"><svg class="i"><use href="#i-rotx" /></svg></span>
+        <span class="g" data-g="scale" role="img" data-i18n-attr="title:gesture.scale,aria-label:gesture.scale"><svg class="i"><use href="#i-scale" /></svg></span>
+      </div>
+
+      <div class="chips dimmable" id="suggest-chips" role="group"></div>
+
+      <div class="caption panel" id="caption" hidden role="log" aria-live="polite" data-i18n-attr="aria-label:caption.aria">
+        <p class="you" id="caption-you"></p>
+        <p class="ai" id="caption-ai"></p>
+      </div>
+
+      <!-- Los errores de voz incluyen un diagnóstico accesible y una posible recuperación, separados del subtitulado normal. -->
+      <div class="caption panel err" id="voice-error" hidden role="alert">
+        <p class="msg" id="voice-error-text"></p>
+        <button class="linkbtn" id="voice-error-howto" type="button" data-i18n="mic.howto" hidden></button>
+        <p class="howto-text" id="voice-error-howto-text" data-i18n="mic.howtoText" hidden></p>
+      </div>
+
+      <div class="kb-bar" id="kb-bar" hidden>
+        <input type="text" id="kb-input" data-i18n-attr="aria-label:keyboard.placeholder,placeholder:keyboard.placeholder" enterkeyhint="send" />
+        <button type="button" id="kb-send" data-i18n-attr="aria-label:keyboard.send"><svg class="i"><use href="#i-send" /></svg></button>
+      </div>
+
+      <div class="guide-dock panel">
+      <span class="guide-caption" data-i18n="guide.label"></span>
+      <div class="ctrl">
+        <button class="iconbtn dimmable" id="btn-keyboard" type="button" data-i18n-attr="aria-label:ui.keyboard">
+          <svg class="i"><use href="#i-keyboard" /></svg>
+        </button>
+        <button class="ptt" id="talk-btn" type="button" data-i18n-attr="aria-label:ptt.aria">
+          <span id="ptt-idle"><svg class="i"><use href="#i-mic" /></svg></span>
+          <span class="wave" id="ptt-wave" hidden><i></i><i></i><i></i><i></i><i></i></span>
+          <svg class="spin" id="ptt-spin" viewBox="0 0 34 34" hidden aria-hidden="true">
+            <circle cx="17" cy="17" r="13" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="20 62" />
+          </svg>
+        </button>
+        <button class="iconbtn dimmable" id="btn-sheet" type="button" data-i18n-attr="aria-label:ui.sheet">
+          <svg class="i"><use href="#i-info" /></svg>
+        </button>
+      </div>
+      <p class="ptt-label" id="ptt-label" role="status" aria-live="polite" data-i18n="ptt.idle"></p>
+      </div>
+
+      </div><!-- La ficha inferior expone contenido y controles mientras la escena ajusta la pose de la pieza al espacio libre. -->
+
+      <div class="sheet" id="piece-sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheet-title" inert>
+        <div class="grab"></div><p class="eyebrow" data-i18n="sheet.eyebrow"></p>
+        <div class="hd2">
+          <div class="display" id="sheet-title"></div>
+          <button class="iconbtn" id="sheet-close" type="button" style="width:40px;height:40px" data-i18n-attr="aria-label:ui.closeSheet">
+            <svg class="i"><use href="#i-close" /></svg>
+          </button>
+        </div>
+        <p class="sheet-summary" id="sheet-summary" hidden></p>
+        <div class="visit-invite" id="visit-invite"><svg class="i" aria-hidden="true"><use href="#i-location" /></svg><p data-i18n="sheet.invitation"></p></div>
+        <dl>
+          <dt data-i18n="sheet.culture"></dt><dd id="sheet-culture"></dd>
+          <dt data-i18n="sheet.period"></dt><dd id="sheet-period"></dd>
+          <dt data-i18n="sheet.material"></dt><dd id="sheet-material"></dd>
+          <dt data-i18n="sheet.origin"></dt><dd id="sheet-origin"></dd>
+          <dt data-i18n="sheet.inventory"></dt><dd id="sheet-inventory"></dd>
+        </dl>
+        <button class="btn primary" id="sheet-ask" type="button" data-i18n="ui.ask"></button>
+      </div>
+    </section>
+
+    <!-- La consola de campo solo se revela bajo la configuración explícita de pruebas y no forma parte del flujo público. -->
+    <aside class="geo-debug panel" id="geo-debug" hidden aria-label="Geo debug">
+      <div class="geo-debug-head">
+        <div>
+          <strong data-i18n="debug.geo.title"></strong>
+          <small>VITE_FIELD_TEST=1</small>
+        </div>
+        <button class="iconbtn geo-debug-collapse" id="geo-debug-collapse" type="button"
+                data-i18n-attr="aria-label:debug.geo.collapse">−</button>
+      </div>
+      <div class="geo-debug-body" id="geo-debug-body">
+        <div class="geo-debug-status">
+          <span><b data-i18n="debug.geo.tracker"></b> <code id="geo-debug-tracker">—</code></span>
+          <span><b data-i18n="debug.geo.engine"></b> <code id="geo-debug-engine">—</code></span>
+          <span><b data-i18n="debug.geo.session"></b> <code id="geo-debug-session">—</code></span>
+        </div>
+
+        <div class="geo-debug-target">
+          <b data-i18n="debug.geo.target"></b>
+          <code id="geo-debug-target">—</code>
+          <small id="geo-debug-radii">—</small>
+        </div>
+
+        <label class="geo-debug-check">
+          <input id="geo-debug-sim" type="checkbox" />
+          <span data-i18n="debug.geo.simulation"></span>
+        </label>
+        <label class="geo-debug-check">
+          <input id="geo-debug-busy" type="checkbox" />
+          <span data-i18n="debug.geo.busy"></span>
+        </label>
+
+        <div class="geo-debug-grid">
+          <label><span data-i18n="debug.geo.lat"></span><input id="geo-debug-lat" type="number" step="0.000001" inputmode="decimal" /></label>
+          <label><span data-i18n="debug.geo.lng"></span><input id="geo-debug-lng" type="number" step="0.000001" inputmode="decimal" /></label>
+          <label><span data-i18n="debug.geo.accuracy"></span><input id="geo-debug-accuracy" type="number" min="1" step="1" value="10" inputmode="numeric" /></label>
+          <label><span data-i18n="debug.geo.repeats"></span><input id="geo-debug-repeats" type="number" min="1" max="5" step="1" value="1" inputmode="numeric" /></label>
+        </div>
+
+        <div class="geo-debug-actions">
+          <button class="btn ghost" id="geo-debug-inject" type="button" data-i18n="debug.geo.inject"></button>
+          <button class="btn ghost" data-geo-preset="near" type="button" data-i18n="debug.geo.near"></button>
+          <button class="btn ghost" data-geo-preset="invoke" type="button" data-i18n="debug.geo.invoke"></button>
+          <button class="btn ghost" data-geo-preset="exit" type="button" data-i18n="debug.geo.exit"></button>
+        </div>
+
+        <div class="geo-debug-last">
+          <b data-i18n="debug.geo.lastFix"></b>
+          <code id="geo-debug-last-fix">—</code>
+        </div>
+        <div class="geo-debug-last">
+          <b data-i18n="debug.geo.lastRawFix"></b>
+          <code id="geo-debug-last-raw-fix">—</code>
+        </div>
+        <div class="geo-debug-metrics">
+          <span><b data-i18n="debug.geo.fixStats"></b><code id="geo-debug-fix-stats">—</code></span>
+          <span><b data-i18n="debug.geo.accuracyStats"></b><code id="geo-debug-accuracy-stats">—</code></span>
+          <span><b data-i18n="debug.geo.intervalStats"></b><code id="geo-debug-interval-stats">—</code></span>
+          <span><b data-i18n="debug.geo.rejectStats"></b><code id="geo-debug-reject-stats">—</code></span>
+        </div>
+        <div class="geo-debug-pieces" id="geo-debug-pieces"></div>
+      </div>
+    </aside>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
