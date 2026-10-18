@@ -8,8 +8,6 @@ La licencia PolyForm del proyecto se aplica al material original según LICENSE.
 
 Proyecto de origen: https://github.com/google-ai-edge/mediapipe
 
-Los hashes recibidos están en `tools/mediapipe-sha256.json`; `tools/verify-mediapipe.mjs` permite detectar alteraciones de esos archivos respecto del manifiesto.
-
 ## Tipografías
 
 `public/fonts/` incluye Hanken Grotesk y Newsreader. Sus avisos de autoría y el texto SIL Open Font License 1.1 se conservan en [public/fonts/OFL.txt](public/fonts/OFL.txt).

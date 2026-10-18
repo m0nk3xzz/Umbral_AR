@@ -132,7 +132,7 @@ aplica y no introduce condiciones adicionales ni sustituye ese texto.
 La licencia se aplica al código fuente y la documentación originales de
 Umbral_AR cuyos derechos corresponden al titular, salvo que un archivo
 indique expresamente otros términos. Esto incluye las aportaciones propias
-en src/, api/, tools/ y los archivos propios de configuración e interfaz.
+en src/, api/ y los archivos propios de configuración e interfaz.
 
 Los modelos 3D, imágenes, videos, audios, marcadores y demás recursos solo
 quedan incluidos en esta licencia cuando sean creaciones originales cuyos

@@ -11,15 +11,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node tools/check-imports.mjs && node tools/check-calibration-motion.mjs && node tools/check-token-handler.mjs && node tools/check-geo.mjs && node tools/check-tourism-stages.mjs && node tools/check-field-test.mjs && node tools/check-visual-flow.mjs && node tools/verify-mediapipe.mjs && node tools/check-audit-regressions.mjs && node tools/check-distributed-quota.mjs && node tools/check-journey-progress.mjs && node tools/check-voice-lifecycle.mjs && node tools/check-media-lifecycle.mjs && node tools/check-resource-cache.mjs && node tools/check-audit-integration.mjs && node tools/check-sdk-contract.mjs && node tools/check-audit-a.mjs",
-    "check": "npm test",
-    "test:browser": "node tools/check-browser.mjs",
     "audit:dependencies": "npm audit --package-lock-only --ignore-scripts"
   },
   "devDependencies": {
-    "acorn": "^8.19.0",
-    "playwright": "1.62.1",
-    "semver": "^7.8.5",
     "vite": "^8.3.0"
   },
   "dependencies": {

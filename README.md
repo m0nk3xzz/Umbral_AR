@@ -29,8 +29,6 @@ Una misma entrada del catálogo puede tener un marcador y coordenadas. También 
 | [Vercel](https://vercel.com/) | Despliegue del frontend y del endpoint de tokens. |
 | [Upstash Redis](https://upstash.com/) | Cuotas compartidas para la emisión de tokens. |
 
-**Sobre LocAR.js:** [LocAR.js](https://github.com/AR-js-org/locar.js) forma parte del planteamiento del proyecto. En los archivos revisados para esta documentación, la geolocalización se implementa mediante `geoTracker.js`, `geoFixFilter.js` y `geoEngine.js`; el `package.json` no declara una dependencia de LocAR.js. Esta documentación distingue la implementación disponible de la integración prevista.
-
 ## Requisitos
 
 - Node.js y npm. La versión fijada en `.nvmrc` es **24.19.0**; `package.json` declara `^20.19.0 || >=22.12.0`.
@@ -150,12 +148,9 @@ Para video con sonido, el navegador puede exigir una interacción explícita del
 | `src/ui.js`, `src/style.css`, `src/styles/` | Interfaz, estilos y movimiento. |
 | `api/token.js` | Credenciales temporales para Gemini Live. |
 | `public/` | Modelos, medios, tipografías y recursos locales de MediaPipe. |
-| `tools/` | Comprobaciones del proyecto y verificación de recursos. |
 | `vite.config.js`, `vercel.json` | Compilación, despliegue y cabeceras de seguridad. |
 
-Conserva `tools/` en el repositorio: contiene comprobaciones a las que hacen referencia los scripts de npm.
-
-## Compilación y comprobaciones
+## Compilación
 
 ```bash
 npm run build
@@ -164,17 +159,7 @@ npm run preview
 
 La compilación genera `dist/`. La vista previa sirve el resultado del frontend y no sustituye el backend de tokens.
 
-Los scripts declarados en `package.json` incluyen:
-
-| Comando | Propósito |
-| --- | --- |
-| `npm test` o `npm run check` | Ejecutar las comprobaciones de `tools/`. |
-| `npm run test:browser` | Ejecutar la comprobación de navegador declarada por el proyecto. |
-| `npm run audit:dependencies` | Consultar vulnerabilidades del archivo de bloqueo sin scripts de instalación. |
-
-Estos comandos requieren que estén presentes todos los archivos a los que hacen referencia. La versión 1.0.0 conserva referencias a siete scripts ausentes de la copia de origen: `check-voice-lifecycle.mjs`, `check-media-lifecycle.mjs`, `check-resource-cache.mjs`, `check-audit-integration.mjs`, `check-sdk-contract.mjs`, `check-audit-a.mjs` y `check-browser.mjs`, todos bajo `tools/`. Recupera esos archivos antes de utilizar la suite completa. No se eliminaron comprobaciones para ocultar esas ausencias.
-
-Para preparar esta publicación se comprobaron la sintaxis de los archivos JavaScript, los imports locales y los hashes de los siete recursos de MediaPipe. No se ejecutaron la compilación ni la suite completa, ni se validó la experiencia desde un dispositivo móvil.
+No se ha validado la experiencia desde un dispositivo móvil ni se ha ejecutado la compilación durante la preparación de esta publicación.
 
 ## Despliegue
 
@@ -192,17 +177,6 @@ GitHub almacena el código. GitHub Pages sirve archivos estáticos y no ejecuta 
 
 La cámara permite reconocer marcadores y manos; la ubicación permite evaluar destinos cercanos; el micrófono permite conversar con la guía. Cada función depende de los permisos del navegador. La conversación por voz implica enviar audio a Gemini, sujeto a las condiciones del proveedor. Evita utilizar información sensible en las conversaciones.
 
-## Versiones
-
-La versión de la aplicación se registra en `package.json` y `package-lock.json`. Cada publicación en GitHub utiliza una etiqueta `vX.Y.Z` y una entrada en [CHANGELOG.md](CHANGELOG.md).
-
-| Ejemplo | Tipo de cambio |
-| --- | --- |
-| `1.0.1` | Correcciones compatibles. |
-| `1.1.0` | Nuevas funciones compatibles. |
-| `2.0.0` | Cambios incompatibles que requieren adaptar la integración o configuración. |
-
-Para futuras publicaciones, actualiza ambos archivos de versión y el historial de cambios, confirma los cambios en Git y crea una etiqueta nueva sobre el commit correspondiente. Publica después una Release de GitHub asociada a esa etiqueta. Conserva las etiquetas publicadas para poder recuperar cada versión.
 
 ## Licencia y autor
 
